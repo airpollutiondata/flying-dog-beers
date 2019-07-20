@@ -9,6 +9,10 @@ from dash.dependencies import Input, Output
 # Testing
 data = pd.read_hdf('air_pollution_data.h5', 'df')
 
+# Table containing the limits for the EPA
+limitFile = 'EPA Limit Table.xlsx'
+Limits = pd.read_excel(limitFile)
+
 
 ########### Set up the chart
 beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
