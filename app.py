@@ -6,6 +6,10 @@ import pandas as pd
 import numpy as np
 from dash.dependencies import Input, Output
 
+# Testing
+data = pd.read_hdf('air_pollution_data.h5', 'df')
+
+
 ########### Set up the chart
 beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
 ibu_values=[35, 60, 85, 75]
