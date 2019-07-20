@@ -42,35 +42,6 @@ scl = [ [0,"rgb(30, 30, 30)"],[0.35,"rgb(90, 90, 90)"],[0.5,"rgb(128, 128, 128)"
     [0.6,"rgb(154, 154, 154)"],[0.7,"rgb(180, 180, 180)"],[1,"rgb(250, 250, 250)"] ]
 
 
-
-########### Set up the chart
-beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
-ibu_values=[35, 60, 85, 75]
-abv_values=[5.4, 7.1, 9.2, 4.3]
-color1='lightblue'
-color2='darkgreen'
-
-bitterness = go.Bar(
-    x=beers,
-    y=ibu_values,
-    name='IBU',
-    marker={'color':color1}
-)
-alcohol = go.Bar(
-    x=beers,
-    y=abv_values,
-    name='ABV',
-    marker={'color':'red'}
-)
-
-beer_data = [bitterness, alcohol]
-beer_layout = go.Layout(
-    barmode='group',
-    title = 'Beer Comparison'
-)
-
-beer_fig = go.Figure(data=beer_data, layout=beer_layout)
-
 ########### Display the chart
 
 app = dash.Dash()
