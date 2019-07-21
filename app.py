@@ -147,7 +147,8 @@ def update_site_param(clickData):
     #siteName = 'Zion NP - Dalton\'s Wash'
     siteData = data[longMask & latMask]
     siteData = siteData[['Parameter Name', 'Units of Measure', 'Year', 'Risk Level']].groupby(['Parameter Name', 'Year', 'Units of Measure']).max().reset_index()
-    
+    siteData['Plotting Text'] = siteData['Parameter Name'] + '<br>Year: ' + siteData['Year'].astype(str) + '<br>Risk: ' + siteData['Risk Level'].astype(str) + ' extra cancer cases per 100k people<br><br>'
+
     # Apply cancer risk thresholds from the EPA
     # siteData['Risk Level'] = siteData.apply(lambda x:applyrisklevel(x, Limits, plottingParameter), axis=1)
     
@@ -156,7 +157,8 @@ def update_site_param(clickData):
             'data':[go.Scatter(
                     x = siteData[siteData['Parameter Name'] == i]['Year'],
                     y = siteData[siteData['Parameter Name'] == i]['Risk Level'],
-                    text = siteData[siteData['Parameter Name'] == i]['Parameter Name'],
+                    text = siteData[siteData['Parameter Name'] == i]['Plotting Text'],
+                    hoverinfo = 'text',
                     mode='lines+markers',
                     marker={
                         'size': 10,
