@@ -146,8 +146,8 @@ def update_site_param(clickData):
     
     #siteName = 'Zion NP - Dalton\'s Wash'
     siteData = data[longMask & latMask]
-    siteData = siteData[['Parameter Name', 'Units of Measure', 'Year', 'Risk Level']].groupby(['Parameter Name', 'Year', 'Units of Measure']).max().reset_index()
-    siteData['Plotting Text'] = siteData['Parameter Name'] + '<br>Year: ' + siteData['Year'].astype(str) + '<br>Risk: ' + siteData['Risk Level'].astype(str) + ' extra cancer cases per 100k people<br><br>'
+    siteData = siteData[['Parameter Name', 'Units of Measure', 'Year', 'Risk Level', 'Tumor Type']].groupby(['Parameter Name', 'Year', 'Units of Measure', 'Tumor Type']).max().reset_index()
+    siteData['Plotting Text'] = siteData['Parameter Name'] + '<br>Year: ' + siteData['Year'].astype(str) + '<br>Risk: ' + siteData['Risk Level'].astype(str) + ' extra cancer cases <br> per 100k people<br><br>' + siteData['Tumor Type']
 
     # Apply cancer risk thresholds from the EPA
     # siteData['Risk Level'] = siteData.apply(lambda x:applyrisklevel(x, Limits, plottingParameter), axis=1)
