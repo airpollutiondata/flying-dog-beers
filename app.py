@@ -18,8 +18,8 @@ plottingParameter = '95th Percentile'
 data = pd.read_hdf('air_pollution_data.h5', 'df')
 
 # Table containing the limits for the EPA
-limitFile = 'EPA Limit Table.xlsx'
-Limits = pd.read_excel(limitFile)
+#limitFile = 'EPA Limit Table.xlsx'
+#Limits = pd.read_excel(limitFile)
 
 
 # Calculate the total risk found by adding up the individual risks for each parameter
@@ -91,7 +91,7 @@ app.layout = html.Div([
                         ), 
                         )],
                 layout = go.Layout(
-                        title = 'EPA Measured Air Pollution Converted to Cancer Risk<br> Click on a site to see measurements', 
+                        title = 'Clicking on a site will pull up breakdown of risk by chemical', 
                         autosize=True,
                         hovermode='closest',
                         showlegend=False,
