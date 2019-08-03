@@ -52,6 +52,7 @@ app.layout = html.Div([
         
 
 # ----------- AIR POLLUTANT MAP -----------------
+   dcc.Loading( 
     html.Div([
         dcc.Graph(
                 figure=go.Figure(
@@ -109,15 +110,18 @@ app.layout = html.Div([
                         )),
             id='collection-map'
         )
-    ], style={'width': '90%', 'display': 'inline-block', 'padding': '0 1'}),      
+    ], style={'width': '90%', 'display': 'inline-block', 'padding': '0 1'}),  
+       ,type="circle")
 # -------------------------------------------------
         
 # ----------- AIR POLLUTANT PARAMETER SCATTER PLOT -----------------
-     html.Div([
+  dcc.Loading( 
+    html.Div([
         dcc.Graph(
                 id = 'site-param-plot'                
         )
     ], style={'width': '90%', 'display': 'inline-block', 'padding': '0 1'}),
+      , type="circle")
 # -------------------------------------------------      
     
 ])
