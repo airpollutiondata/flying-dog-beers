@@ -111,7 +111,7 @@ app.layout = html.Div([
             id='collection-map'
         )
     ], style={'width': '90%', 'display': 'inline-block', 'padding': '0 1'}),  
-       ,type="circle")
+       type="circle")
 # -------------------------------------------------
         
 # ----------- AIR POLLUTANT PARAMETER SCATTER PLOT -----------------
@@ -121,7 +121,7 @@ app.layout = html.Div([
                 id = 'site-param-plot'                
         )
     ], style={'width': '90%', 'display': 'inline-block', 'padding': '0 1'}),
-      , type="circle")
+      type="circle")
 # -------------------------------------------------      
     
 ])
