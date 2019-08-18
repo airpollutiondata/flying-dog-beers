@@ -21,6 +21,30 @@ data = pd.read_hdf('air_pollution_data.h5', 'df')
 #limitFile = 'EPA Limit Table.xlsx'
 #Limits = pd.read_excel(limitFile)
 
+# Make a note of the  colors used for plotting
+DEFAULT_PLOTLY_COLORS=['rgb(255, 18, 18)', # red
+                       'rgb(27, 30, 242)', # blue
+                       'rgb(255, 127, 14)', # orange
+                       'rgb(20, 97, 20)', # dark green               
+                       'rgb(154, 81, 232)', # purple
+                       'rgb(191, 47, 17)', # rust
+                       'rgb(245, 24, 201)', # magenta
+                       'rgb(26, 184, 515)', # cyan
+                       'rgb(188, 189, 34)',  # yellow
+                       'rgb(73, 242, 27)'] # light green
+
+# Set up plotting markers
+uniqueMarkers = ["circle", 
+"diamond", # diamond
+"x", 
+"triangle-down", # triangle_down
+"square", # square
+"pentagon", 
+"star", # star
+"triangle-up", # triangle_up
+"triangle-left", # triangle_left
+"triangle-right"] # triangle_right
+
 
 # Calculate the total risk found by adding up the individual risks for each parameter
 # ------------------------------------------------
@@ -144,17 +168,22 @@ def update_site_param(clickData):
     stateName = data[longMask & latMask]['State Name'].unique()[0]
     if pd.isnull(siteName):
         siteName = str(cityName) + ', ' + str(stateName)
-    #locationString = str(siteName) + ': ' + str(cityName) + ', ' + str(stateName)
     locationString = str(siteName) + '<br>' + str(cityName) + ', ' + str(stateName)
     
-    #siteName = 'Zion NP - Dalton\'s Wash'
     siteData = data[longMask & latMask]
     siteData = siteData[['Parameter Name', 'Units of Measure', 'Year', 'Risk Level', 'Tumor Type']].groupby(['Parameter Name', 'Year', 'Units of Measure', 'Tumor Type']).max().reset_index()
     siteData['Plotting Text'] = siteData['Parameter Name'] + '<br>Year: ' + siteData['Year'].astype(str) + '<br>Risk: ' + siteData['Risk Level'].astype(str) + ' extra cancer cases <br> per 100k people<br><br>' + siteData['Tumor Type']
 
-    # Apply cancer risk thresholds from the EPA
-    # siteData['Risk Level'] = siteData.apply(lambda x:applyrisklevel(x, Limits, plottingParameter), axis=1)
     
+    # Build the array that contains the parameters sorted by risk level - this is so that the highest risk parameter will get plotted first
+    OrderedByRisk = siteData[['Parameter Name', 'Risk Level']].groupby(['Parameter Name']).max()
+    OrderedByRisk = OrderedByRisk.sort_values(by='Risk Level', ascending=False)
+    
+    # Since the colors will typically repeat, specify the markers to be used for each parameter
+    nRepeats = int(len(OrderedByRisk)/len(DEFAULT_PLOTLY_COLORS))
+    nRemaining = len(OrderedByRisk)%len(DEFAULT_PLOTLY_COLORS)    
+    markerList = np.sort(len(DEFAULT_PLOTLY_COLORS)*uniqueMarkers[0:nRepeats] + nRemaining*[uniqueMarkers[nRepeats]])
+    OrderedByRisk['Markers'] = markerList
     
     return {
             'data':[go.Scatter(
@@ -164,12 +193,13 @@ def update_site_param(clickData):
                     hoverinfo = 'text',
                     mode='lines+markers',
                     marker={
+                        'symbol': OrderedByRisk.at[i, 'Markers'], 
                         'size': 10,
                         'opacity': 0.5,
                         'line': {'width': 0.5, 'color': 'white'}
                     },
                     name = i
-                    )for i in np.sort(siteData['Parameter Name'].unique())
+                    )for i in OrderedByRisk.index
                     ],
             'layout': go.Layout(
                         title = {'text': locationString}, 
