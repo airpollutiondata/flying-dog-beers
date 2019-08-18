@@ -205,7 +205,7 @@ def update_site_param(clickData):
                         title = {'text': locationString}, 
                         xaxis={
                             'title': 'Year',
-                            'type': 'linear'
+                            'dtick': 1,
                         },
                         yaxis={
                             'title': 'Extra # of Cancer Cases per 100k People',
