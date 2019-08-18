@@ -219,11 +219,11 @@ def update_site_param(clickData):
                         dragmode=False,
                         annotations=[
                             dict(
-                                x=1.12,
-                                y=1.2,
+                                x=1.1,
+                                y=1.3,
                                 align="left",
                                 valign="top",
-                                text='Click on a compound below to <br>exclude it from the graph',
+                                text='Click on a <br>compound below to <br>exclude it from <br>the graph',
                                 showarrow=False,
                                 xref="paper",
                                 yref="paper",
