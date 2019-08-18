@@ -216,7 +216,21 @@ def update_site_param(clickData):
                         #width = '95%',
                         hovermode='closest',
                         showlegend=True,
-                        dragmode=False
+                        dragmode=False,
+                        annotations=[
+                            dict(
+                                x=1.12,
+                                y=1.2,
+                                align="left",
+                                valign="top",
+                                text='Click on a compound below to <br>exclude it from the graph',
+                                showarrow=False,
+                                xref="paper",
+                                yref="paper",
+                                xanchor="center",
+                                yanchor="top"
+                            )
+                        ]
                
                     )
                     
