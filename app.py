@@ -216,6 +216,7 @@ def update_site_param(clickData):
                         #width = '95%',
                         hovermode='closest',
                         showlegend=True,
+                        dragmode=False
                
                     )
                     
